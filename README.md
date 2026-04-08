@@ -1,34 +1,33 @@
-time-series-comparison/
+timesseries-comparison/
 │
 ├── data/
-│   ├── raw/
-│   ├── processed/
-│
-├── src/
-│   ├── data/
-│   │   ├── load_data.py
-│   │   ├── preprocess.py
-│   │   ├── windowing.py
+│   ├── raw/                  
+│   │   ├── weather.csv
+│   │   ├── apple_stock.csv
 │   │
-│   ├── models/
-│   │   ├── rnn.py
-│   │   ├── lstm.py
-│   │   ├── gru.py
-│   │   ├── arima.py
-│   │
-│   ├── training/
-│   │   ├── train.py
-│   │   ├── evaluate.py
-│   │
-│   ├── utils/
+│   ├── processed/            
+│       ├── weather_cleaned.csv
+│       ├── apple_cleaned.csv
 │
 ├── notebooks/
-│   ├── EDA.ipynb
-│   ├── experiments.ipynb
+│   ├── weather_preprocessing.ipynb
+│   ├── apple_preprocessing.ipynb
+│   ├── eda_weather.ipynb
+│   ├── eda_apple.ipynb
 │
-├── results/
+├── utils/
+│   ├── preprocessing.py      
+│
+├── models/
+│   ├── lstm_model.py
+│   ├── transformer_model.py
+│
+├── train.py                  
+├── evaluate.py               
+│
+├── outputs/
 │   ├── plots/
-│   ├── metrics.csv
+│   ├── predictions/
 │
-├── config.yaml
 ├── README.md
+└── requirements.txt
