@@ -1,3 +1,4 @@
+```
 timesseries-comparison/
 │
 ├── data/
@@ -31,3 +32,4 @@ timesseries-comparison/
 │
 ├── README.md
 └── requirements.txt
+```
