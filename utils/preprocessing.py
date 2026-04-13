@@ -3,6 +3,7 @@ import random
 import numpy as np
 import pandas as pd
 import torch
+from sklearn.preprocessing import StandardScaler
 from torch.utils.data import TensorDataset, DataLoader
 
 
@@ -167,7 +168,7 @@ def prepare_timeseries_from_cleaned(
     seed=42
 ):
     """
-    Full pipeline from saved cleaned CSV -> dataloaders
+    Full pipeline from saved cleaned CSV -> time split -> train-only scaling -> dataloaders
     """
     df = load_cleaned_dataset(csv_path, date_col=date_col)
     target_col = infer_target_col(df, dataset_name=dataset_name, target_col=target_col)
@@ -180,19 +181,41 @@ def prepare_timeseries_from_cleaned(
         val_ratio=val_ratio
     )
 
+    # fit scaler on train only
+    scaler = StandardScaler()
+    train_scaled = scaler.fit_transform(train_df[feature_cols])
+    val_scaled = scaler.transform(val_df[feature_cols])
+    test_scaled = scaler.transform(test_df[feature_cols])
+
+    train_scaled_df = pd.DataFrame(
+        train_scaled,
+        index=train_df.index,
+        columns=feature_cols
+    )
+    val_scaled_df = pd.DataFrame(
+        val_scaled,
+        index=val_df.index,
+        columns=feature_cols
+    )
+    test_scaled_df = pd.DataFrame(
+        test_scaled,
+        index=test_df.index,
+        columns=feature_cols
+    )
+
     X_train, y_train = create_sequences_xy(
-        train_df[feature_cols].values,
-        train_df[[target_col]].values,
+        train_scaled_df[feature_cols].values,
+        train_scaled_df[[target_col]].values,
         window
     )
     X_val, y_val = create_sequences_xy(
-        val_df[feature_cols].values,
-        val_df[[target_col]].values,
+        val_scaled_df[feature_cols].values,
+        val_scaled_df[[target_col]].values,
         window
     )
     X_test, y_test = create_sequences_xy(
-        test_df[feature_cols].values,
-        test_df[[target_col]].values,
+        test_scaled_df[feature_cols].values,
+        test_scaled_df[[target_col]].values,
         window
     )
 
@@ -219,4 +242,5 @@ def prepare_timeseries_from_cleaned(
         "y_val_shape": y_val.shape,
         "X_test_shape": X_test.shape,
         "y_test_shape": y_test.shape,
-    }   
+        "scaler": scaler,
+    }

@@ -32,7 +32,7 @@ DATASETS = {
         "csv_path": "data/cleaned/apple_cleaned.csv",
         "date_col": "Date",
         "window": 30,
-        "target_col": "Close",
+        "target_col": "log_return",
         "batch_size": 64,
         "epochs": 50,
         "lr": 1e-3,
@@ -251,6 +251,12 @@ def run_dataset(dataset_name, config, assets_dir, device):
         y_true, y_pred = predict(model, data["test_loader"], device)
         rmse, mae = get_metrics(y_true, y_pred)
 
+        print(f"{dataset_name} | {model_name}")
+        print("  y_true shape:", y_true.shape, "y_pred shape:", y_pred.shape)
+        print("  y_true min/max:", float(y_true.min()), float(y_true.max()))
+        print("  y_pred min/max:", float(y_pred.min()), float(y_pred.max()))
+        print("  first 5 y_true:", y_true[:5].reshape(-1))
+        print("  first 5 y_pred:", y_pred[:5].reshape(-1))
         print(f"Test RMSE: {rmse:.6f} | Test MAE: {mae:.6f}")
 
         save_loss_plot(
