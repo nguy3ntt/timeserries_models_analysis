@@ -12,8 +12,8 @@ The models compared in this project are:
 - Transformer
 
 Two datasets are used:
-- Apple stock data (financial time series)
-- Weather time series (structured environmental data)
+- [Apple stock data (financial time series)](https://www.kaggle.com/datasets/varpit94/apple-stock-data-updated-till-22jun2021)
+- [Weather time series (structured environmental data)](https://www.kaggle.com/datasets/varpit94/apple-stock-data-updated-till-22jun2021)
 
 The project focuses on understanding:
 - The importance of preprocessing and target transformation
