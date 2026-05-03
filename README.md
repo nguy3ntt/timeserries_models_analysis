@@ -1,6 +1,6 @@
 
 # Time Series Model Comparison: MLP vs RNN vs LSTM vs Transformer
-
+Author: Tin Trung Nguyen
 ## Overview
 
 This project investigates and compares the performance of different machine learning models for time series forecasting. The main objective is to evaluate how well different architectures capture temporal patterns across datasets with very different characteristics.
